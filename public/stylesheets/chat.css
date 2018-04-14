@@ -8,7 +8,7 @@ body {
 }
 
 #message-pane {
-    background: black;
+    background: #0E6655;
 }
 
 #form-card {
@@ -17,4 +17,11 @@ body {
 
 .material-icon {
     font-size: 48px !important;
+}
+
+.message-card {
+    max-width: 75%;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
 }
