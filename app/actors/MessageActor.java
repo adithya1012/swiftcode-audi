@@ -40,19 +40,20 @@ public class MessageActor extends UntypedActor {
         //send back response
         //object mapper to convert xml to json
         ObjectMapper objectMapper = new ObjectMapper();
+        Message messageObject = new Message();
         //instanceof check for type of variables
         NewsAgentResponse newsAgentResponse=new NewsAgentResponse();
         if (message instanceof String) {
-            Message messageObject = new Message();
             messageObject.text=(String)message;
             messageObject.sender= Message.Sender.USER;
             out.tell(objectMapper.writeValueAsString(messageObject), self());
             //self is reference convert to json
-            newsAgentResponse=newsAgentService.getNewsAgentResponse(messageObject.text,UUID.randomUUID());//keyword
+            newsAgentResponse=newsAgentService.getNewsAgentResponse("Find " + messageObject.text,UUID.randomUUID());//keyword
             feedResponse=feedService.getFeedByQuery(newsAgentResponse.query);//actual news
             messageObject.text = (feedResponse.title == null) ? "No results found" : "Showing results for: " + newsAgentResponse.query;
             messageObject.feedResponse=feedResponse;
             messageObject.sender=Message.Sender.BOT;
+            out.tell(objectMapper.writeValueAsString(messageObject), self());
         }
     }
 

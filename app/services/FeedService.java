@@ -18,21 +18,21 @@ public class FeedService {
             CompletionStage<WSResponse> responsePromise=feedRequest
                     .setQueryParameter("q",query)
                     .setQueryParameter("output","rss")
-                    .setQueryParameter("lang","en")
                     .get();
-            Document response=responsePromise.thenApply(WSResponse::asXml).toCompletableFuture().get();
-            //response=compleat xml file
-            Node item=response.getFirstChild().getFirstChild().getChildNodes().item(10);
-            feedResponseObject.title   = item.getChildNodes().item(0).getNodeValue();
-            feedResponseObject.pubDate  = item.getChildNodes().item(3).getNodeValue();
-            feedResponseObject.description  = item.getChildNodes().item(4).getNodeValue();
-        }
-        catch(Exception e)
-        {
 
+            Document feedResponse =responsePromise.thenApply(WSResponse::asXml).toCompletableFuture().get();
+            System.out.println(feedResponse);
+            Node item = feedResponse.getFirstChild().getFirstChild().getChildNodes().item(10);
+            feedResponseObject.title = item.getChildNodes().item(0).getFirstChild().getNodeValue();
+            feedResponseObject.pubDate = item.getChildNodes().item(3).getFirstChild().getNodeValue();
+            feedResponseObject.description = item.getChildNodes().item(4).getFirstChild().getNodeValue();
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return feedResponseObject;
+
     }
-
-
 }

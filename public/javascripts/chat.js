@@ -4,29 +4,25 @@ app.config(function ($mdThemingProvider) {
         .primaryPalette('purple')
         .accentPalette('blue');
 });
-app.controller('chatController', function ($scope) {
-    $scope.message = [
-        {
-            'sender': 'USER',
-            'text': 'hello'
-    },
-        {
-            'sender': 'BOT',
-            'text': 'wt to do'
-    },
-        {
-            'sender': 'USER',
-            'text': 'nothing'
-    },
-        {
-            'sender': 'BOT',
-            'text': 'then'
-    },
-        {
-            'sender': 'USER',
-            'text': 'sleep'
-    }
-    ]
+app.controller('chatController', function ($scope, $sce) {
+    $scope.messages = [];
+    $scope.trust = $sce.trustAsHtml;
+    //creating web sockets
+    var exampleSocket = new WebSocket('ws://localhost:9000/chatSocket');
 
+    exampleSocket.onmessage = function (event) {
+        var jsonData = JSON.parse(event.data);
+        jsonData.time = new Date()
+            .toLocaleTimeString();
+        $scope.messages.push(jsonData);
+        $scope.$apply();
+        console.log(jsonData);
+    };
+
+
+    $scope.sendMessage = function () {
+        exampleSocket.send($scope.userMessage);
+        $scope.userMessage = '';
+    };
 
 });
