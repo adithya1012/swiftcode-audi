@@ -9,10 +9,15 @@ body {
 
 #message-pane {
     background: #0E6655;
+    background-image: url("https://1.bp.blogspot.com/-S52WmXqJiaA/UamDXl5JHWI/AAAAAAAAPUQ/aipfZEEn87M/s640/June+2013+Calendar.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
 #form-card {
     margin: 0px;
+    background-color: #00BFA5 !important;
 }
 
 .material-icon {

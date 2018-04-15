@@ -1,4 +1,9 @@
 var app = angular.module('chatApp', ['ngMaterial']);
+app.config(function ($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('purple')
+        .accentPalette('blue');
+});
 app.controller('chatController', function ($scope) {
     $scope.message = [
         {
@@ -22,4 +27,6 @@ app.controller('chatController', function ($scope) {
             'text': 'sleep'
     }
     ]
+
+
 });
